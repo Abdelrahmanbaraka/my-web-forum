@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="<%= currentLanguage %>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= currentLanguage === 'de' ? 'Profil' : 'Profile' %> - Web Forum</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+    <div class="layout-container">
+        <%- include('partials/header') %>
+
+        <main class="main-content">
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <% if (currentUser && currentUser.isAnonymous) { %>
+                            <div class="avatar-anonymous">🎭</div>
+                        <% } else { %>
+                            <div class="avatar-user">👤</div>
+                        <% } %>
+                    </div>
+
+                    <% 
+                        // Normalize created date: support both snake_case (created_at) and camelCase (createdAt)
+                        const userCreatedRaw = currentUser && (currentUser.createdAt || currentUser.created_at || currentUser.created);
+                        const userCreatedDate = userCreatedRaw ? new Date(userCreatedRaw) : null;
+                        const hasValidDate = userCreatedDate && !isNaN(userCreatedDate.getTime());
+                    %>
+
+                    <div class="profile-info">
+                        <h1 class="profile-username">
+                            <%= currentUser ? currentUser.username : '—' %>
+                            <% if (currentUser && currentUser.isAnonymous) { %>
+                                <span class="anonymous-tag">🎭 <%= currentLanguage === 'de' ? 'Anonym' : 'Anonymous' %></span>
+                            <% } %>
+                        </h1>
+
+                        <% if (currentUser && !currentUser.isAnonymous) { %>
+                            <p class="profile-email"><%= currentUser.email %></p>
+                        <% } %>
+
+                        <p class="profile-join-date">
+                            <%= currentLanguage === 'de' ? 'Mitglied seit' : 'Member since' %>:
+                            <% if (hasValidDate) { %>
+                                <%= userCreatedDate.toLocaleDateString(currentLanguage === 'de' ? 'de-DE' : 'en-US', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                }) %>
+                            <% } else { %>
+                                — 
+                            <% } %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="profile-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label"><%= currentLanguage === 'de' ? 'Beiträge' : 'Posts' %></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label"><%= currentLanguage === 'de' ? 'Kommentare' : 'Comments' %></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">
+                            <% if (hasValidDate) { %>
+                                <%= userCreatedDate.toLocaleDateString(currentLanguage === 'de' ? 'de-DE' : 'en-US') %>
+                            <% } else { %>
+                                —
+                            <% } %>
+                        </div>
+                        <div class="stat-label"><%= currentLanguage === 'de' ? 'Beigetreten' : 'Joined' %></div>
+                    </div>
+                </div>
+
+                <div class="profile-actions">
+                    <form action="/auth/logout" method="POST" class="logout-form">
+                        <button type="submit" class="logout-btn">
+                            <%= currentLanguage === 'de' ? 'Abmelden' : 'Logout' %>
+                        </button>
+                    </form>
+                    
+                    <% if (currentUser && currentUser.isAnonymous) { %>
+                        <div class="anonymous-warning">
+                            <h3>🎭 <%= currentLanguage === 'de' ? 'Anonymes Konto' : 'Anonymous Account' %></h3>
+                            <p>
+                                <%= currentLanguage === 'de' ? 
+                                    'Dies ist ein temporäres anonymes Konto. Deine Daten werden nicht dauerhaft gespeichert.' : 
+                                    'This is a temporary anonymous account. Your data will not be permanently stored.' %>
+                            </p>
+                        </div>
+                    <% } %>
+                </div>
+
+                <!-- Recent Activity Placeholder -->
+                <div class="recent-activity">
+                    <h2><%= currentLanguage === 'de' ? 'Aktivität' : 'Activity' %></h2>
+                    <div class="activity-empty">
+                        <p>
+                            <%= currentLanguage === 'de' ? 
+                                'Noch keine Aktivität vorhanden.' : 
+                                'No activity yet.' %>
+                        </p>
+                        <a href="/posts/new" class="create-first-post-btn">
+                            <%= currentLanguage === 'de' ? 'Ersten Beitrag erstellen' : 'Create your first post' %>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <%- include('partials/footer') %>
+    </div>
+</body>
+</html>

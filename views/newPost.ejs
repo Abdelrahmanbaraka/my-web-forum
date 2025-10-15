@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="<%= currentLanguage %>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= currentLanguage === 'de' ? 'Neuer Beitrag' : 'New Post' %> - Web Forum</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/forum.css">
+</head>
+<body>
+    <div class="layout-container">
+        <%- include('partials/header') %>
+
+        <main class="main-content">
+            <div class="new-post-container">
+                <div class="new-post-card">
+                    <div class="post-form-header">
+                        <h1><%= currentLanguage === 'de' ? 'Neuen Beitrag erstellen' : 'Create New Post' %></h1>
+                        <p><%= currentLanguage === 'de' ? 
+                            'Teile deine Gedanken mit der Community' : 
+                            'Share your thoughts with the community' %></p>
+                    </div>
+
+                    <% if (typeof error !== 'undefined' && error) { %>
+                        <div class="error-message">
+                            <%= error %>
+                        </div>
+                    <% } %>
+
+                    <form action="/posts/new" method="POST" class="post-form">
+                        <div class="form-group">
+                            <label for="title" class="form-label">
+                                <%= currentLanguage === 'de' ? 'Titel' : 'Title' %> *
+                            </label>
+                            <input type="text" id="title" name="title" required 
+                                   class="form-input" 
+                                   placeholder="<%= currentLanguage === 'de' ? 
+                                       'Gib deinem Beitrag einen Titel' : 
+                                       'Give your post a title' %>"
+                                   maxlength="200">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category" class="form-label">
+                                <%= currentLanguage === 'de' ? 'Kategorie' : 'Category' %> *
+                            </label>
+                            <select id="category" name="category" required class="form-select">
+                                <option value=""><%= currentLanguage === 'de' ? 
+                                    'Wähle eine Kategorie' : 
+                                    'Select a category' %></option>
+                                <% categories.forEach(cat => { %>
+                                    <option value="<%= cat.id %>">
+                                        <%= currentLanguage === 'de' ? cat.nameDE : cat.name %>
+                                    </option>
+                                <% }) %>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="content" class="form-label">
+                                <%= currentLanguage === 'de' ? 'Inhalt' : 'Content' %> *
+                            </label>
+                            <textarea id="content" name="content" required 
+                                      class="form-textarea"
+                                      placeholder="<%= currentLanguage === 'de' ? 
+                                          'Schreibe hier deinen Beitrag...' : 
+                                          'Write your post content here...' %>"
+                                      rows="12"></textarea>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="isAnonymous">
+                                <span class="checkmark"></span>
+                                🎭 <%= currentLanguage === 'de' ? 'Anonym posten' : 'Post anonymously' %>
+                                <small class="option-help">
+                                    <%= currentLanguage === 'de' ? 
+                                        '(Dein Name wird nicht angezeigt)' : 
+                                        '(Your name will not be shown)' %>
+                                </small>
+                            </label>
+                        </div>
+
+                        <div class="form-actions">
+                            <a href="/" class="cancel-btn">
+                                <%= currentLanguage === 'de' ? 'Abbrechen' : 'Cancel' %>
+                            </a>
+                            <button type="submit" class="submit-post-btn">
+                                <%= currentLanguage === 'de' ? 'Beitrag erstellen' : 'Create Post' %>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <%- include('partials/footer') %>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

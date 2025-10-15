@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="<%= currentLanguage %>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'Web Forum' %></title>
+    
+    <!-- CSS الأساسي -->
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <!-- CSS الإضافي بناءً على الصفحة -->
+    <% if (typeof cssFiles !== 'undefined') { %>
+        <% cssFiles.forEach(cssFile => { %>
+            <link rel="stylesheet" href="/css/<%= cssFile %>">
+        <% }) %>
+    <% } %>
+    
+    <!-- CSS افتراضي للصفحات التي لا تحدد cssFiles -->
+    <% if (typeof cssFiles === 'undefined') { %>
+        <link rel="stylesheet" href="/css/style.css">
+    <% } %>
+</head>
+<body>
+    <div class="layout-container">
+        <header class="main-header">
+            <div class="header-container">
+                <div class="logo-section">
+                    <a href="/" class="logo-link">
+                        <span class="logo-icon">💬</span>
+                        <span class="logo-text">WebForum</span>
+                    </a>
+                </div>
+
+                <nav class="navigation">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link">
+                                <%= currentLanguage === 'de' ? 'Startseite' : 'Home' %>
+                            </a>
+                        </li>
+                        <% if (currentUser) { %>
+                            <li class="nav-item">
+                                <a href="/posts/new" class="nav-link">
+                                    <%= currentLanguage === 'de' ? 'Neuer Beitrag' : 'New Post' %>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/profile" class="nav-link">
+                                    <%= currentLanguage === 'de' ? 'Profil' : 'Profile' %>
+                                </a>
+                            </li>
+                        <% } %>
+                    </ul>
+                </nav>
+
+                <div class="user-section">
+                    <% if (currentUser) { %>
+                        <div class="user-info">
+                            <span class="username">
+                                <% if (currentUser.isAnonymous) { %>
+                                    🎭 <%= currentUser.username %>
+                                <% } else { %>
+                                    👤 <%= currentUser.username %>
+                                <% } %>
+                            </span>
+                            <form action="/auth/logout" method="POST" class="logout-form">
+                                <button type="submit" class="logout-btn">
+                                    <%= currentLanguage === 'de' ? 'Abmelden' : 'Logout' %>
+                                </button>
+                            </form>
+                        </div>
+                    <% } else { %>
+                        <div class="auth-links">
+                            <a href="/auth/login" class="auth-link login-link">
+                                <%= currentLanguage === 'de' ? 'Anmelden' : 'Login' %>
+                            </a>
+                            <a href="/auth/register" class="auth-link register-link">
+                                <%= currentLanguage === 'de' ? 'Registrieren' : 'Register' %>
+                            </a>
+                        </div>
+                    <% } %>
+
+                    <!-- Language Selector -->
+                    <form action="/change-language" method="POST" class="language-form">
+                        <select name="language" onchange="this.form.submit()" class="language-select">
+                            <option value="de" <%= currentLanguage === 'de' ? 'selected' : '' %>>DE</option>
+                            <option value="en" <%= currentLanguage === 'en' ? 'selected' : '' %>>EN</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </header>

@@ -1,0 +1,56 @@
+<aside class="main-sidebar">
+    <div class="sidebar-section">
+        <h3 class="sidebar-title">
+            <%= currentLanguage === 'de' ? 'Kategorien' : 'Categories' %>
+        </h3>
+        <ul class="sidebar-categories">
+            <% categories.forEach(category => { %>
+                <li class="sidebar-category <%= selectedCategory === category.id ? 'active' : '' %>">
+                    <a href="/?category=<%= category.id %>" class="category-link">
+                        <span class="category-icon"><%= category.icon %></span>
+                        <span class="category-name">
+                            <%= currentLanguage === 'de' ? category.nameDE : category.name %>
+                        </span>
+                        <span class="category-count">(<%= category.postCount %>)</span>
+                    </a>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+
+    <div class="sidebar-section">
+        <h3 class="sidebar-title">
+            <%= currentLanguage === 'de' ? 'Forum Statistiken' : 'Forum Statistics' %>
+        </h3>
+        <div class="sidebar-stats">
+            <div class="stat-item">
+                <span class="stat-label"><%= currentLanguage === 'de' ? 'Beiträge' : 'Posts' %>:</span>
+                <span class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label"><%= currentLanguage === 'de' ? 'Benutzer' : 'Users' %>:</span>
+                <span class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label"><%= currentLanguage === 'de' ? 'Kommentare' : 'Comments' %>:</span>
+                <span class="stat-value">0</span>
+            </div>
+        </div>
+    </div>
+
+    <% if (currentUser) { %>
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">
+                <%= currentLanguage === 'de' ? 'Schnellaktionen' : 'Quick Actions' %>
+            </h3>
+            <div class="sidebar-actions">
+                <a href="/posts/new" class="sidebar-action-btn">
+                    📝 <%= currentLanguage === 'de' ? 'Neuer Beitrag' : 'New Post' %>
+                </a>
+                <a href="/profile" class="sidebar-action-btn">
+                    👤 <%= currentLanguage === 'de' ? 'Profil' : 'Profile' %>
+                </a>
+            </div>
+        </div>
+    <% } %>
+</aside>

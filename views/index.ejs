@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="<%= currentLanguage %>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Forum - <%= currentLanguage === 'de' ? 'Startseite' : 'Home' %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="layout-container">
+        <%- include('partials/header') %>
+
+        <main class="main-content">
+            <div class="forum-container">
+                <!-- Search and Actions -->
+               <!-- Search and Actions -->
+<div class="forum-actions">
+    <form id="searchForm" action="/" method="GET" class="search-form" role="search" aria-label="Search posts">
+        <input id="searchInput" type="text" name="search" value="<%= searchQuery %>" 
+               placeholder="<%= currentLanguage === 'de' ? 'Suche nach Beiträgen...' : 'Search posts...' %>"
+               class="search-input" autocomplete="off" aria-label="Search input">
+        <input type="hidden" name="category" value="<%= selectedCategory %>">
+        <button type="submit" class="search-btn">
+            <%= currentLanguage === 'de' ? 'Suchen' : 'Search' %>
+        </button>
+    </form>
+    
+    <% if (currentUser) { %>
+        <a href="/posts/new" class="create-post-btn">
+            <%= currentLanguage === 'de' ? 'Neuer Beitrag' : 'New Post' %>
+        </a>
+    <% } %>
+</div>
+
+
+                <div class="forum-layout">
+                    <!-- Sidebar -->
+                    <aside class="sidebar">
+                        <div class="categories-section">
+                            <h3><%= currentLanguage === 'de' ? 'Kategorien' : 'Categories' %></h3>
+                            <ul class="categories-list">
+                                <% categories.forEach(category => { %>
+                                    <li class="category-item <%= selectedCategory === category.id ? 'active' : '' %>">
+                                        <a href="/?category=<%= category.id %>&search=<%= searchQuery %>" class="category-link">
+                                            <span class="category-icon"><%= category.icon %></span>
+                                            <span class="category-name">
+                                                <%= currentLanguage === 'de' ? category.nameDE : category.name %>
+                                            </span>
+                                            <span class="post-count">(<%= category.postCount %>)</span>
+                                        </a>
+                                    </li>
+                                <% }) %>
+                            </ul>
+                        </div>
+
+                        <!-- User Card -->
+                        <%- include('partials/userCard') %>
+                    </aside>
+
+                    <!-- Posts Section -->
+                    <section class="posts-section">
+                        <div class="posts-header">
+                            <h2>
+                                <% if (selectedCategory !== 'all') { %>
+                                    <% const currentCat = categories.find(cat => cat.id === selectedCategory) %>
+                                    <%= currentLanguage === 'de' ? currentCat.nameDE : currentCat.name %>
+                                <% } else { %>
+                                    <%= currentLanguage === 'de' ? 'Alle Beiträge' : 'All Posts' %>
+                                <% } %>
+                                <span class="posts-count">(<%= posts.length %>)</span>
+                            </h2>
+                            
+                            <% if (searchQuery) { %>
+                                <p class="search-results-info">
+                                    <%= currentLanguage === 'de' ? 
+                                        `Suchergebnisse für: "${searchQuery}"` : 
+                                        `Search results for: "${searchQuery}"` %>
+                                    <a href="/?category=<%= selectedCategory %>" class="clear-search">
+                                        (<%= currentLanguage === 'de' ? 'Zurücksetzen' : 'Clear' %>)
+                                    </a>
+                                </p>
+                            <% } %>
+                        </div>
+
+                        <!-- Posts List -->
+                        <div class="posts-list">
+                            <% if (posts.length > 0) { %>
+                                <% posts.forEach(post => { %>
+                                    <article class="post-card">
+                                        <div class="post-header">
+                                            <h3 class="post-title">
+                                                <a href="/posts/<%= post.id %>" class="post-link">
+                                                    <%= post.title %>
+                                                </a>
+                                            </h3>
+                                            <div class="post-meta">
+                                                <span class="post-category <%= post.category %>">
+                                                    <%= post.category %>
+                                                </span>
+                                                <% if (post.is_anonymous) { %>
+                                                    <span class="anonymous-badge">🎭 <%= currentLanguage === 'de' ? 'Anonym' : 'Anonymous' %></span>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="post-content-preview">
+                                            <%= post.content.substring(0, 150) %>
+                                            <%= post.content.length > 150 ? '...' : '' %>
+                                        </div>
+                                        
+                                        <div class="post-footer">
+                                            <div class="post-author">
+                                                <%= currentLanguage === 'de' ? 'Von' : 'By' %>:
+                                                <% if (post.is_anonymous) { %>
+                                                    <span class="anonymous-author">🎭 <%= currentLanguage === 'de' ? 'Anonym' : 'Anonymous' %></span>
+                                                <% } else { %>
+                                                    <strong><%= post.username || 'Unknown' %></strong>
+                                                <% } %>
+                                            </div>
+                                            <div class="post-date">
+                                                <%= new Date(post.created_at).toLocaleDateString(currentLanguage === 'de' ? 'de-DE' : 'en-US') %>
+                                            </div>
+                                        </div>
+                                    </article>
+                                <% }) %>
+                            <% } else { %>
+                                <div class="no-posts">
+                                    <h3><%= currentLanguage === 'de' ? 'Keine Beiträge gefunden' : 'No posts found' %></h3>
+                                    <p>
+                                        <%= currentLanguage === 'de' ? 
+                                            'Sei der Erste, der einen Beitrag erstellt!' : 
+                                            'Be the first to create a post!' %>
+                                    </p>
+                                    <% if (currentUser) { %>
+                                        <a href="/posts/new" class="create-first-post-btn">
+                                            <%= currentLanguage === 'de' ? 'Ersten Beitrag erstellen' : 'Create First Post' %>
+                                        </a>
+                                    <% } else { %>
+                                        <a href="/auth/login" class="login-to-post-btn">
+                                            <%= currentLanguage === 'de' ? 'Anmelden um Beitrag zu erstellen' : 'Login to create post' %>
+                                        </a>
+                                    <% } %>
+                                </div>
+                            <% } %>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <%- include('partials/footer') %>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
+

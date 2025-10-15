@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="<%= currentLanguage %>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= currentLanguage === 'de' ? 'Anmelden' : 'Login' %> - Web Forum</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+    <div class="layout-container">
+        <%- include('partials/header') %>
+
+        <main class="main-content">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h1><%= currentLanguage === 'de' ? 'Anmelden' : 'Login' %></h1>
+                        <p><%= currentLanguage === 'de' ? 
+                            'Willkommen zurück!' : 
+                            'Welcome back!' %></p>
+                    </div>
+
+                    <% if (error) { %>
+                        <div class="error-message">
+                            <%= error %>
+                        </div>
+                    <% } %>
+
+                    <form action="/auth/login" method="POST" class="auth-form">
+                        <div class="form-group">
+                            <label for="email" class="form-label">
+                                <%= currentLanguage === 'de' ? 'E-Mail' : 'Email' %>
+                            </label>
+                            <input type="email" id="email" name="email" required 
+                                   class="form-input" placeholder="your@email.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="form-label">
+                                <%= currentLanguage === 'de' ? 'Passwort' : 'Password' %>
+                            </label>
+                            <input type="password" id="password" name="password" required 
+                                   class="form-input" placeholder="••••••••">
+                        </div>
+
+                        <button type="submit" class="form-submit">
+                            <%= currentLanguage === 'de' ? 'Anmelden' : 'Login' %>
+                        </button>
+                    </form>
+
+                    <div class="auth-divider">
+                        <span><%= currentLanguage === 'de' ? 'oder' : 'or' %></span>
+                    </div>
+
+                    <!-- Anonymous Login -->
+                    <form action="/auth/anonymous-login" method="POST" class="anonymous-form">
+                        <button type="submit" class="anonymous-btn">
+                            🎭 <%= currentLanguage === 'de' ? 'Anonym beitreten' : 'Join Anonymously' %>
+                        </button>
+                        <p class="anonymous-note">
+                            <%= currentLanguage === 'de' ? 
+                                'Erstelle einen temporären anonymen Account' : 
+                                'Create a temporary anonymous account' %>
+                        </p>
+                    </form>
+
+                    <div class="auth-footer">
+                        <p>
+                            <%= currentLanguage === 'de' ? 
+                                'Noch kein Konto?' : 
+                                'Don\'t have an account?' %>
+                            <a href="/auth/register" class="auth-link">
+                                <%= currentLanguage === 'de' ? 'Jetzt registrieren' : 'Register now' %>
+                            </a>
+                        </p>
+                    </div>
+
+                    <!-- Demo Credentials -->
+                    <div class="demo-credentials">
+                        <h4><%= currentLanguage === 'de' ? 'Demo Zugang:' : 'Demo Access:' %></h4>
+                        <p>Email: admin@forum.com</p>
+                        <p>Password: password123</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <%- include('partials/footer') %>
+    </div>
+</body>
+</html>

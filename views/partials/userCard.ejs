@@ -1,0 +1,67 @@
+<div class="user-card">
+  <% if (currentUser) { %>
+    <div class="user-card-header">
+      <div class="user-avatar">
+        <% if (currentUser.isAnonymous) { %>
+          <div class="avatar-icon anonymous">🎭</div>
+        <% } else { %>
+          <div class="avatar-icon user">👤</div>
+        <% } %>
+      </div>
+
+      <div class="user-info">
+        <h4 class="username"><%= currentUser.username %></h4>
+
+        <!-- حذف عرض الايميل هنا — لم يعد يظهر -->
+        <!-- لو حبيت تعرضه في مكان آخر، أعلمني -->
+
+        <p class="user-status">
+          <% if (currentUser.isAnonymous) { %>
+            <span class="status-badge status-anonymous">🎭 <%= currentLanguage === 'de' ? 'Anonym' : 'Anonymous' %></span>
+          <% } else { %>
+           <span class="status-badge status-registered">
+  <span class="status-dot"></span>
+  <%= currentLanguage === 'de' ? 'Registriert' : 'Registered' %>
+</span>
+
+
+          <% } %>
+        </p>
+      </div>
+    </div>
+
+    <div class="user-card-stats">
+      <div class="user-stat">
+        <span class="stat-number">0</span>
+        <span class="stat-label"><%= currentLanguage === 'de' ? 'Beiträge' : 'Posts' %></span>
+      </div>
+      <div class="user-stat">
+        <span class="stat-number">0</span>
+        <span class="stat-label"><%= currentLanguage === 'de' ? 'Kommentare' : 'Comments' %></span>
+      </div>
+    </div>
+
+    <div class="user-card-actions">
+      <a href="/profile" class="profile-link">
+        <%= currentLanguage === 'de' ? 'Profil ansehen' : 'View Profile' %>
+      </a>
+      <form action="/auth/logout" method="POST" class="logout-form-inline">
+        <button type="submit" class="logout-link">
+          <%= currentLanguage === 'de' ? 'Abmelden' : 'Logout' %>
+        </button>
+      </form>
+    </div>
+  <% } else { %>
+    <div class="user-card-guest">
+      <div class="guest-icon">👋</div>
+      <h4><%= currentLanguage === 'de' ? 'Willkommen!' : 'Welcome!' %></h4>
+      <p><%= currentLanguage === 'de' ? 
+          'Melde dich an um Beiträge zu erstellen und zu kommentieren.' : 
+          'Log in to create posts and comments.' %></p>
+      <div class="guest-actions">
+        <a href="/auth/login" class="login-btn"><%= currentLanguage === 'de' ? 'Anmelden' : 'Login' %></a>
+        <a href="/auth/register" class="register-btn"><%= currentLanguage === 'de' ? 'Registrieren' : 'Register' %></a>
+      </div>
+    </div>
+  <% } %>
+</div>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="<%= currentLanguage || 'de' %>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= currentLanguage === 'de' ? 'Fehler' : 'Error' %> - Web Forum</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="layout-container">
+        <%- include('partials/header') %>
+        
+        <main class="main-content">
+            <div class="flex items-center justify-center h-96">
+                <div class="text-center">
+                    <h1 class="text-4xl font-bold text-red-600 mb-4">
+                        <%= currentLanguage === 'de' ? 'Ein Fehler ist aufgetreten' : 'An Error Occurred' %>
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-4">
+                        <%= typeof error !== 'undefined' ? error : (currentLanguage === 'de' ? 'Unbekannter Fehler' : 'Unknown error') %>
+                    </p>
+                    <a href="/" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
+                        <%= currentLanguage === 'de' ? 'Zur Startseite' : 'Back to Home' %>
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <%- include('partials/footer') %>
+    </div>
+</body>
+</html>

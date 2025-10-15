@@ -1,0 +1,26 @@
+<footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3><%= currentLanguage === 'de' ? 'WebForum' : 'Web Forum' %></h3>
+            <p><%= currentLanguage === 'de' ? 
+                'Eine Community für offene Diskussionen' : 
+                'A community for open discussions' %></p>
+        </div>
+        
+        <div class="footer-section">
+            <h3><%= currentLanguage === 'de' ? 'Links' : 'Links' %></h3>
+            <ul>
+                <li><a href="/"><%= currentLanguage === 'de' ? 'Startseite' : 'Home' %></a></li>
+                <% if (!currentUser) { %>
+                    <li><a href="/auth/register"><%= currentLanguage === 'de' ? 'Registrieren' : 'Register' %></a></li>
+                <% } %>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <p>&copy; 2025 WebForum. <%= currentLanguage === 'de' ? 
+                'Alle Rechte vorbehalten.' : 
+                'All rights reserved.' %></p>
+        </div>
+    </div>
+</footer>
