@@ -45,14 +45,14 @@ function initMobileMenu() {
 }
 
 // Search Functionality
-// Search Functionality (تحديث)
+
 function initSearch() {
-    // دعم لكل من id أو class في القالب
+    
     const searchInput = document.getElementById('searchInput') || document.querySelector('.search-input');
     const searchForm = document.getElementById('searchForm') || document.querySelector('.search-form');
 
     if (searchInput && searchForm) {
-        // Real-time search suggestions (optional)
+        
         searchInput.addEventListener('input', debounce(function(e) {
             const query = e.target.value.trim();
             if (query.length > 2) {
@@ -63,10 +63,7 @@ function initSearch() {
         // Quick search on Enter — use keydown for broader compatibility
         searchInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
-                // If the user pressed Enter inside the search input, submit the form normally
-                // (do not preventDefault) so the server receives both 'search' and hidden 'category'
-                // but if you previously prevented default anywhere, ensure performSearch uses a fallback
-                // We'll submit programmatically to be safe:
+                
                 e.preventDefault();
                 if (searchForm) {
                     // Ensure hidden category input is up-to-date (in case active category changed via JS)
@@ -100,22 +97,17 @@ function performSearch() {
 
 // Category Filtering
 function initCategoryFilters() {
-    // استهدف الرابط <a class="category-link">
     const categoryLinks = document.querySelectorAll('.category-link');
     const categoryItems = document.querySelectorAll('.category-item');
 
     categoryLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            // لا تمنع السلوك الافتراضي — دعه يذهب للـ server ليعيد تحميل الصفحة
-            // نحدّث الـ active class فورًا لتجربة مستخدم أفضل قبل التنقّل
+    
             categoryItems.forEach(cat => cat.classList.remove('active'));
             const li = this.closest('.category-item');
             if (li) li.classList.add('active');
 
-            // ملاحظة: إذا أردت استخدام فلترة AJAX بدل إعادة تحميل، فكّ التعليق عن السطور بالأسفل
-            // e.preventDefault();
-            // const categoryId = this.dataset.category || new URL(this.href).searchParams.get('category') || 'all';
-            // filterPostsByCategory(categoryId);
+           
         });
     });
 }

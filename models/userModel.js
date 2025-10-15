@@ -6,7 +6,6 @@ const User = {
     try {
       const { username, email, password, isAnonymous = false } = userData;
 
-      // استخدام ID التلقائي من قاعدة البيانات - إزالة ID العشوائي
       let query, params;
       
       if (isAnonymous) {
@@ -27,7 +26,6 @@ const User = {
     } catch (error) {
       console.error('❌ Error creating user in database:', error);
       
-      // Fallback آمن - استخدام ID من قاعدة البيانات الموجودة
       const fallbackUser = await db.query('SELECT id FROM users ORDER BY id DESC LIMIT 1');
       const fallbackId = fallbackUser.rows[0]?.id || 1;
       

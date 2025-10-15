@@ -5,17 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= typeof title !== 'undefined' ? title : 'Web Forum' %></title>
     
-    <!-- CSS الأساسي -->
+    
     <link rel="stylesheet" href="/css/style.css">
     
-    <!-- CSS الإضافي بناءً على الصفحة -->
     <% if (typeof cssFiles !== 'undefined') { %>
         <% cssFiles.forEach(cssFile => { %>
             <link rel="stylesheet" href="/css/<%= cssFile %>">
         <% }) %>
     <% } %>
     
-    <!-- CSS افتراضي للصفحات التي لا تحدد cssFiles -->
     <% if (typeof cssFiles === 'undefined') { %>
         <link rel="stylesheet" href="/css/style.css">
     <% } %>

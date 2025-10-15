@@ -524,33 +524,6 @@
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* تحسين تنسيق النماذج */
 .form-container {
   max-width: 600px;
   margin: 0 auto;
@@ -587,7 +560,6 @@
   resize: vertical;
 }
 
-/* تحسين تنسيق البطاقات */
 .post-card {
   background: white;
   border-radius: 12px;
@@ -602,7 +574,6 @@
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
 }
 
-/* تحسين التنسيق العام */
 .main-content {
   background: #f8f9fa;
   min-height: calc(100vh - 200px);

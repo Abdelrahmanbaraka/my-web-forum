@@ -12,9 +12,7 @@
       <div class="user-info">
         <h4 class="username"><%= currentUser.username %></h4>
 
-        <!-- حذف عرض الايميل هنا — لم يعد يظهر -->
-        <!-- لو حبيت تعرضه في مكان آخر، أعلمني -->
-
+        
         <p class="user-status">
           <% if (currentUser.isAnonymous) { %>
             <span class="status-badge status-anonymous">🎭 <%= currentLanguage === 'de' ? 'Anonym' : 'Anonymous' %></span>

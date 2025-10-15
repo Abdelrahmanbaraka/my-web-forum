@@ -17,18 +17,16 @@ app.use(session({
   cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 } // 24 hours
 }));
 
-// Set EJS as template engine
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Global variables middleware
 app.use((req, res, next) => {
-  // إذا لم يكن هناك لغة محددة في الجلسة، تعيين الألمانية كافتراضي
   if (!req.session.language) {
     req.session.language = 'de';
   }
   
-  // تمرير المتغيرات لجميع الـ views
   res.locals.currentUser = req.session.user || null;
   res.locals.currentLanguage = req.session.language || 'de';
   res.locals.searchQuery = '';

@@ -31,7 +31,6 @@ const Post = {
       let query;
       const params = [];
 
-      // ✅ الإصلاح: query منفصلة لكل حالة
       if (category && category !== 'all') {
         query = `SELECT p.*, u.username FROM posts p LEFT JOIN users u ON p.author_id = u.id WHERE p.category = $1`;
         params.push(category);
@@ -62,7 +61,7 @@ const Post = {
       
       console.log(`✅ [POST MODEL] Found ${result.rows.length} posts for category: "${category}"`);
       
-      // تحقق إضافي
+       
       if (category && category !== 'all') {
         const filteredCategories = {};
         result.rows.forEach(post => {

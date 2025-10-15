@@ -1,5 +1,5 @@
 const Post = require('../models/postModel');
-const db = require('../config/db'); // ⬅️ لازم نضيف هذا السطر
+const db = require('../config/db');
 
 const categories = [
   { id: 'all', name: 'All Categories', nameDE: 'Alle Kategorien', icon: '📋', postCount: 0 },
@@ -26,10 +26,9 @@ exports.getHomePage = async (req, res) => {
     let posts = await Post.findAll(selectedCategory, searchQuery);
     
     console.log('📊 [CONTROLLER] Posts returned to view:', posts.length);
-    
-    // استدعاء الدالة المعدلة
-    await updateCategoryCounts(); // ⬅️ await لأنها async الآن
-    
+
+    await updateCategoryCounts();
+
     res.render('index', {
       currentUser: req.session.user || null,
       currentLanguage,
@@ -49,7 +48,7 @@ exports.getHomePage = async (req, res) => {
       searchQuery: '',
       cssFiles: ['style.css']
     });
-  } // ⬅️ كانت ناقصة هنا
+  }  
 };
 
 exports.getProfilePage = (req, res) => {
@@ -68,15 +67,12 @@ exports.changeLanguage = (req, res) => {
   res.redirect('back');
 };
 
-// الدالة المعدلة لحساب العدد الصحيح
 async function updateCategoryCounts() {
   try {
     console.log('🔄 [COUNTS] Starting to update category counts...');
     
-    // إعادة تعيين العداد
     categories.forEach(cat => cat.postCount = 0);
     
-    // حساب العدد الفعلي لكل فئة من قاعدة البيانات
     for (let category of categories) {
       if (category.id === 'all') {
         const allResult = await db.query('SELECT COUNT(*) FROM posts');

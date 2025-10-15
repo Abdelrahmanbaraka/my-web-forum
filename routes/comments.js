@@ -5,7 +5,6 @@ const { sanitizeText } = require('../utils/sanitize');
 const { createComment, getCommentsForPost } = require('../models/commentModel');
 const { getPostById } = require('../models/postModel');
 
-// جلب تعليقات لمنشور
 router.get('/:postId', async (req, res) => {
   try {
     console.log('🔄 Fetching comments for post:', req.params.postId);
@@ -17,7 +16,6 @@ router.get('/:postId', async (req, res) => {
   }
 });
 
-// إنشاء تعليق (يسمح بالـ anonymous مثل المنشورات)
 router.post('/:postId', optionalAuthenticate, async (req, res) => {
   try {
     console.log('🔄 Creating comment for post:', req.params.postId);
@@ -26,7 +24,6 @@ router.post('/:postId', optionalAuthenticate, async (req, res) => {
     
     const { body, pseudonym, anonymous } = req.body;
     
-    // تحقق من وجود المنشور
     const post = await getPostById(req.params.postId);
     if (!post) {
       console.log('❌ Post not found:', req.params.postId);
