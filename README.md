@@ -1,208 +1,64 @@
-# 🌐 MY-WEB-FORUM – Full Stack Web Application
+# My Web Forum
 
-## 📖 Project Overview
+A server-rendered forum application built to practise full-stack development with Node.js, Express, EJS and PostgreSQL.
 
-MY-WEB-FORUM is a full-stack web application that allows users to create, browse, and interact with posts in a dynamic forum environment.
-The system supports authentication, post creation, commenting, and user interaction features.
+## Implemented areas
 
-The application follows a structured MVC (Model-View-Controller) architecture and integrates a relational database for data management.
+- User registration and login
+- Password hashing with bcrypt
+- Session-based authentication
+- Creation and display of forum posts
+- Comments associated with posts
+- Search and category-oriented navigation
+- German and English interface state
+- Structured error and 404 pages
 
----
+## Architecture
 
-## 🏗️ Architecture
-
-The project is structured using MVC principles:
-
-* **Models** → Handle database logic (`models/`)
-* **Views** → EJS templates for UI (`views/`)
-* **Controllers** → Business logic (`controllers/`)
-* **Routes** → API and page routing (`routes/`)
-
----
-
-## 📂 Project Structure
+The project separates request handling, data access and presentation:
 
 ```text
-MY-WEB-FORUM/
-│
-├── config/                # Database configuration
-│   └── db.js
-│
-├── controllers/           # Application logic
-│   ├── authController.js
-│   ├── mainController.js
-│   └── postController.js
-│
-├── database/              # SQL initialization
-│   └── init.sql
-│
-├── middleware/            # Authentication middleware
-│   └── authMiddleware.js
-│
-├── models/                # Data models
-│   ├── userModel.js
-│   ├── postModel.js
-│   └── commentModel.js
-│
-├── public/                # Static files
-│   ├── css/
-│   ├── html/
-│   └── js/
-│       └── main.js
-│
-├── routes/                # Application routes
-│   ├── authRoutes.js
-│   ├── mainRoutes.js
-│   └── postRoutes.js
-│
-├── views/                 # EJS templates
-│   ├── index.ejs
-│   ├── login.ejs
-│   ├── register.ejs
-│   ├── post.ejs
-│   ├── profile.ejs
-│   └── partials/
-│
-├── utils/                 # Helper functions
-├── package.json
-└── .gitignore
+my-web-forum/
+├── config/        Database configuration
+├── controllers/   Request and application logic
+├── database/      SQL initialization
+├── middleware/    Authentication checks
+├── models/        PostgreSQL queries
+├── public/        Static CSS and client assets
+├── routes/        Express route modules
+├── views/         EJS templates
+└── server.js      Application entry point
 ```
 
----
+## Technology stack
 
-## ⚙️ Features
+- Node.js and Express 4
+- EJS templates
+- PostgreSQL
+- express-session
+- bcrypt
+- JavaScript and CSS
 
-### 🔐 Authentication System
-
-* User registration & login
-* Session-based authentication
-* Middleware protection for routes
-
----
-
-### 📝 Post Management
-
-* Create new posts
-* View all posts
-* Individual post pages
-
----
-
-### 💬 Comments System
-
-* Add comments to posts
-* Display comments dynamically
-
----
-
-### 🔍 Search & Filtering
-
-* Search functionality for posts
-* Category-based filtering
-
----
-
-### ❤️ User Interactions
-
-* Like system
-* Share functionality
-* Notifications
-
----
-
-### 🎨 Frontend
-
-* Dynamic UI using JavaScript
-* EJS templating engine
-* Responsive design
-
----
-
-## 🗄️ Database
-
-* Relational database (SQL)
-* Initialization via:
-
-```sql
-database/init.sql
-```
-
-### Main Tables:
-
-* Users
-* Posts
-* Comments
-
----
-
-## 🛠️ Technologies Used
-
-* Node.js
-* Express.js
-* EJS (templating engine)
-* SQL Database
-* JavaScript (Frontend)
-* CSS
-
----
-
-## 🚀 Installation & Setup
-
-1. Clone the repository:
+## Local setup
 
 ```bash
 git clone https://github.com/Abdelrahmanbaraka/my-web-forum.git
-```
-
-2. Install dependencies:
-
-```bash
+cd my-web-forum
 npm install
 ```
 
-3. Setup database:
-
-* Run `database/init.sql`
-
-4. Start the server:
+Create a `.env` file with the PostgreSQL connection settings expected by `config/db.js` and a private session secret. Initialize the database using the SQL files in `database/`, then start the application:
 
 ```bash
 npm start
 ```
 
-5. Open in browser:
+The default local address is `http://localhost:3000`.
 
-```text
-http://localhost:3000
-```
+## Current limitations
 
----
-
-## 🔌 API & Routing
-
-Routes are organized into modules:
-
-* `/auth` → Authentication routes
-* `/posts` → Post-related routes
-* `/` → Main pages
-
----
-
-## 💡 Key Highlights
-
-* Clean MVC architecture
-* Modular and scalable code structure
-* Separation of concerns (routes, controllers, models)
-* Full-stack implementation
-
----
-
-## 👨‍💻 Author
-
-**Abdelrahman Baraka**
-
----
-
-## 📌 Notes
-
-This project demonstrates full-stack development skills including backend architecture, database integration, and frontend interactivity.
+- This is a learning project and has not been prepared for production hosting.
+- Sessions use the default in-memory store.
+- Automated tests are not included.
+- Production deployments should add secure cookies, CSRF protection, rate limiting and a persistent session store.
+- Features such as notifications or social sharing are not presented here unless they are fully supported by the code.
